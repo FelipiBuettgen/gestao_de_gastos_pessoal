@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 import 'package:gestao_de_gastos_pessoal/models/transaction.dart';
@@ -39,47 +39,23 @@ class TransactionList extends StatelessWidget {
               itemBuilder: ((context, index) {
                 final e = transactions[index];
                 return Card(
-                    child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 10,
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: FittedBox(child: Text('R\$${e.valor}')),
                       ),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                        color: Theme.of(context).colorScheme.primary,
-                        width: 2,
-                      )),
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        'R\$ ${e.valor.toStringAsFixed(2)}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Theme.of(context).colorScheme.primary),
-                      ),
+                      radius: 30,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          e.titulo,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          DateFormat('d/MMM/y').format(e.data),
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 116, 116, 116),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ));
+                    title: Text(e.titulo,
+                        style: TextStyle(
+                            fontFamily: 'Exo2', fontWeight: FontWeight.bold)),
+                    subtitle: Text(DateFormat('d/MMM/y').format(e.data)),
+                  ),
+                );
               }),
             ),
     );

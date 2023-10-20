@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:gestao_de_gastos_pessoal/components/chart_bar.dart';
 import 'package:gestao_de_gastos_pessoal/models/transaction.dart';
 import 'package:intl/intl.dart';
 
@@ -8,7 +9,7 @@ class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
   const Chart({super.key, required this.recentTransactions});
 
-  List<Map<String, Object>> get groupedTransactions {
+  List<Map<String, dynamic>> get groupedTransactions {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
       double totalSum = 0.0;
@@ -27,6 +28,12 @@ class Chart extends StatelessWidget {
         'day': DateFormat.E().format(weekDay)[0],
         'value': totalSum,
       };
+    }).reversed.toList();
+  }
+
+  double get _weekTotalValue {
+    return groupedTransactions.fold(0, (previousValue, element) {
+      return previousValue + element['value']!;
     });
   }
 
@@ -36,10 +43,21 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: groupedTransactions.map((e) {
-          return Text('${e['day']}:${e['value']}');
-        }).toList(),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransactions.map((e) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                value: e['value'],
+                label: e['day'].toString(),
+                percentage: e['value'] / _weekTotalValue,
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
