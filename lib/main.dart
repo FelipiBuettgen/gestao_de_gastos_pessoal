@@ -12,7 +12,11 @@ void main() {
     theme: ThemeData(
             fontFamily: 'Exo2',
             appBarTheme: AppBarTheme(
-              titleTextStyle: TextStyle(fontWeight: FontWeight.w800),
+              titleTextStyle: TextStyle(
+                fontSize: 25,
+                fontFamily: 'Exo2',
+                fontWeight: FontWeight.w800,
+              ),
             ))
         .copyWith(
             colorScheme: tema.colorScheme
@@ -28,19 +32,19 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final _transactions = [
-    Transaction(
-      id: 't1',
-      titulo: 'Conta de internet',
-      valor: 120.75,
-      data: DateTime.now(),
-    ),
-    Transaction(
-      id: 't1',
-      titulo: 'Conta de agua',
-      valor: 87.70,
-      data: DateTime.now(),
-    ),
+  final List<Transaction> _transactions = [
+    // Transaction(
+    //   id: 't1',
+    //   titulo: 'Conta de internet',
+    //   valor: 120.75,
+    //   data: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't1',
+    //   titulo: 'Conta de agua',
+    //   valor: 87.70,
+    //   data: DateTime.now(),
+    // ),
   ];
   _addTransaction(String title, double value) {
     final newTrasaction = Transaction(
