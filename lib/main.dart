@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables, avoid_print
 import 'package:flutter/material.dart';
+import 'package:gestao_de_gastos_pessoal/components/chart.dart';
 import 'components/transaction_form.dart';
 import 'models/transaction.dart';
 import 'dart:math';
@@ -32,20 +33,16 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: 't1',
-    //   titulo: 'Conta de internet',
-    //   valor: 120.75,
-    //   data: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't1',
-    //   titulo: 'Conta de agua',
-    //   valor: 87.70,
-    //   data: DateTime.now(),
-    // ),
-  ];
+  final List<Transaction> _transactions = [];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((element) {
+      return element.data.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
+    }).toList();
+  }
+
   _addTransaction(String title, double value) {
     final newTrasaction = Transaction(
         id: Random().nextDouble().toString(),
@@ -81,11 +78,7 @@ class _AppState extends State<App> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Card(
-              child: Text('Grafico'),
-              elevation: 2,
-              color: Colors.greenAccent,
-            ),
+            Chart(recentTransactions: _recentTransactions),
             TransactionList(transactions: _transactions),
           ],
         ),
