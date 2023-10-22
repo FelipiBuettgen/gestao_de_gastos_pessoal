@@ -34,7 +34,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final List<Transaction> _transactions = [
-    Transaction(id: '0', titulo: 'Teste', valor: 150, data: DateTime.now())
+    // Transaction(id: '0', titulo: 'Teste', valor: 150, data: DateTime.now())
   ];
 
   List<Transaction> get _recentTransactions {
@@ -45,16 +45,22 @@ class _AppState extends State<App> {
     }).toList();
   }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTrasaction = Transaction(
         id: Random().nextDouble().toString(),
         titulo: title,
         valor: value,
-        data: DateTime.now());
+        data: date);
     setState(() {
       _transactions.add(newTrasaction);
     });
     Navigator.of(context).pop();
+  }
+
+  _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((element) => element.id == id);
+    });
   }
 
   _openTransactionModal(BuildContext context) {
@@ -81,7 +87,8 @@ class _AppState extends State<App> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(recentTransactions: _recentTransactions),
-            TransactionList(transactions: _transactions),
+            TransactionList(
+                transactions: _transactions, delete: _deleteTransaction),
           ],
         ),
       ),
