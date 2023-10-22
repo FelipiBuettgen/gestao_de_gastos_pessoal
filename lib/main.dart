@@ -33,7 +33,9 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final List<Transaction> _transactions = [];
+  final List<Transaction> _transactions = [
+    Transaction(id: '0', titulo: 'Teste', valor: 150, data: DateTime.now())
+  ];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((element) {

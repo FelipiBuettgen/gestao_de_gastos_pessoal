@@ -33,7 +33,7 @@ class Chart extends StatelessWidget {
 
   double get _weekTotalValue {
     return groupedTransactions.fold(0, (previousValue, element) {
-      return previousValue + element['value']!;
+      return previousValue + element['value'] + 0.0;
     });
   }
 
@@ -53,7 +53,8 @@ class Chart extends StatelessWidget {
               child: ChartBar(
                 value: e['value'],
                 label: e['day'].toString(),
-                percentage: e['value'] / _weekTotalValue,
+                percentage:
+                    _weekTotalValue == 0 ? 0 : e['value'] / _weekTotalValue,
               ),
             );
           }).toList(),
