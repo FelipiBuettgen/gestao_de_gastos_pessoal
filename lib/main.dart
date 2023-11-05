@@ -75,7 +75,9 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Despesas Pessoais"),
+        title: Text(
+          "Despesas Pessoais",
+        ),
         actions: [
           IconButton(
               onPressed: () => _openTransactionModal(context),
